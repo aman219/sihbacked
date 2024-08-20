@@ -1,0 +1,36 @@
+{
+  "name": "sihbacked",
+  "version": "1.0.0",
+  "description": "It is nodejs and expressjs backend server using mongodb",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/main.js",
+    "start": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aman219/sihbacked.git"
+  },
+  "keywords": [
+    "sih",
+    "application"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aman219/sihbacked/issues"
+  },
+  "homepage": "https://github.com/aman219/sihbacked#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
