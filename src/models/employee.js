@@ -1,5 +1,4 @@
 const {mongoose, Schema} = require('mongoose')
-// const { Department } = reuqire('./department')
 
 const employeeSchema = new Schema({
     firstName : {
@@ -34,6 +33,9 @@ const employeeSchema = new Schema({
     password : {
         type: String,
         required: true
+    },
+    refreshToken : {
+        type: String
     },
     prfilePhoto : {
         type: String
