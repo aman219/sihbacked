@@ -1,6 +1,6 @@
 const {mongoose, Schema} = require('mongoose')
-const { jwt } = require('jsonwebtoken')
-const { bcrypt } = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const employeeSchema = new Schema({
     firstName : {
@@ -24,7 +24,7 @@ const employeeSchema = new Schema({
         unique: true,
         lowercase: true,
     },
-    mobileNumber : {
+    phoneNumber : {
         type: String,
         unique: true
     },
@@ -39,7 +39,7 @@ const employeeSchema = new Schema({
     refreshToken : {
         type: String
     },
-    prfilePhoto : {
+    profilePhoto : {
         type: String
     },
     role : {
@@ -55,16 +55,16 @@ const employeeSchema = new Schema({
 
 employeeSchema.pre("save", async function (next){
     if (!this.isModified("password")) return next();
-
+    
     this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
-employeeSchema.method.isPasswordCorrect = async function(password) {
+employeeSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
 }
 
-employeeSchema.method.genrateAccessToken = function() {
+employeeSchema.methods.genrateAccessToken = function() {
     return jwt.sign({
         _id: this._id,
         email: this.email
@@ -76,7 +76,7 @@ employeeSchema.method.genrateAccessToken = function() {
     )
 }
 
-employeeSchema.method.genrateRefreshToken = function() {
+employeeSchema.methods.genrateRefreshToken = function() {
     return jwt.sign({
         _id: this._id
     },

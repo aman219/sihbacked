@@ -21,6 +21,6 @@ const {router : register} = require('./routes/users')
 const {router : employee} = require('./routes/employee')
 
 app.use("/api/v1/users", register)
-app.use("api/v1/employee", employee)
+app.use("/api/v1/employee", employee)
 
 module.exports = { app }

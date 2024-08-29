@@ -1,6 +1,6 @@
 const { asyncHandler } = require('../utils/asyncHandler')
 const { ApiError } = require('../utils/ApiError')
-const { jwt } = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const { Employee } = require('../models/employee')
 
 const auth = asyncHandler( async(req, res, next) => {
