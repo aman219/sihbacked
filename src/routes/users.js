@@ -1,5 +1,4 @@
 const { Router } = require('express')
-
 const {register } = require('../controllers/users')
 
 const router = Router();

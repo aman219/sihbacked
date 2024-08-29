@@ -5,7 +5,8 @@ const cors = require("cors");
 const app = express()
 
 let corsOptions = {
-    origin: 'http://localhost:3000',
+    // origin: 'http://localhost:3000',
+    origin: '*',
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 }
@@ -17,7 +18,9 @@ app.use(cookieParser());
 app.use(cors(corsOptions))
 
 const {router : register} = require('./routes/users')
+const {router : employee} = require('./routes/employee')
 
-app.use("/api/v1/users/", register)
+app.use("/api/v1/users", register)
+app.use("api/v1/employee", employee)
 
 module.exports = { app }
