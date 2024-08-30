@@ -12,11 +12,7 @@ const departmentSchema = new Schema({
     }],
     resource : [{
         type: Schema.Types.ObjectId,
-        ref: 'Resource',
-        quantity: {
-            type: Number,
-            default: 0
-        }
+        ref: 'Resource'
     }]
 }, {timestamps: true})
 
