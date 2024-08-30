@@ -9,10 +9,6 @@ const departmentSchema = new Schema({
     employee: [{
         type: Schema.Types.ObjectId,
         ref: 'Employee'
-    }],
-    resource : [{
-        type: Schema.Types.ObjectId,
-        ref: 'Resource'
     }]
 }, {timestamps: true})
 

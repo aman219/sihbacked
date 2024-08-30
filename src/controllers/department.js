@@ -13,11 +13,6 @@ const addEmployeeToDepartment = async(employee_id, dep) => {
     }
 }
 
-const addResourceToDepartment = async(resource_id, dep) => {
-    const department = await Department.findOne({name: dep})    
-    department.resource.push(resource_id)
-    await department.save();
-}
 
 const addDepartment = asyncHandler( async(req, res) => {
     const department = await Department.create(req.body)
@@ -30,6 +25,5 @@ const addDepartment = asyncHandler( async(req, res) => {
 })
 
 module.exports = { addDepartment,
-    addEmployeeToDepartment,
-    addResourceToDepartment
- }
+    addEmployeeToDepartment
+}
