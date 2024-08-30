@@ -19,8 +19,10 @@ app.use(cors(corsOptions))
 
 const {router : register} = require('./routes/users')
 const {router : employee} = require('./routes/employee')
+const {router : resource} = require('./routes/resource')
 
 app.use("/api/v1/users", register)
 app.use("/api/v1/employee", employee)
+app.use("/api/v1/resource", resource)
 
 module.exports = { app }
