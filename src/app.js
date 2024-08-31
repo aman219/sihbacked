@@ -21,10 +21,12 @@ const {router : register} = require('./routes/users')
 const {router : employee} = require('./routes/employee')
 const {router : resource} = require('./routes/resource')
 const {router : department} = require('./routes/department')
+const {router : project} = require('./routes/project')
 
 app.use("/api/v1/users", register)
 app.use("/api/v1/employee", employee)
 app.use("/api/v1/resource", resource)
 app.use("/api/v1/department", department)
+app.use("/api/v1/project", project)
 
 module.exports = { app }
