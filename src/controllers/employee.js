@@ -4,6 +4,7 @@ const { asyncHandler } = require('../utils/asyncHandler')
 const { Employee } = require('../models/employee')
 const { options } = require('../constants')
 const jwt = require('jsonwebtoken')
+const { Department } = require('../models/department')
 
 const genrateToken = async (userId) => {
     try {
@@ -21,11 +22,17 @@ const genrateToken = async (userId) => {
 
 const registerEmployee = asyncHandler( async(req, res) => {
     req.body.profilePhoto = req.file?.path || "public/temp/default.jpg"
-    req.body.department = '66cb20aa7fe57a5e27f960b9';
+    const department = await Department.findOne({name: req.body.department})
+    if (!department) {
+        throw new ApiError(400, "Not getting form data properly, department")
+    }
+    req.body.department = department._id
     const employee = await Employee.create(req.body);
     if (!employee) {
         throw new ApiError(400, "Not getting form data properly")
     }
+    department.employee.push(employee._id)
+    await department.save()
     return res.status(200).json(
         new ApiResponse(200, employee, "Employee created successfully")
     )
