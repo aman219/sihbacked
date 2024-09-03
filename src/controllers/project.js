@@ -14,6 +14,7 @@ const addPorject = asyncHandler(async (req, res, next) => {
     if (!newProject) {
         throw new ApiError(400, 'Project not created')
     }
+    
     return res
     .status(200)
     .json(new ApiResponse(200, newProject, 'Project created successfully', project))

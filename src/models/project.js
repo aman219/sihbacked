@@ -15,13 +15,17 @@ const projectSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Department'
     },
+    budget: {
+        type: Number,
+        required: true
+    },
     resources: [{
         type: Resource.schema
     }],
     status: {
         type: String,
         enum: ['active', 'inactive'],
-        default: 'active'
+        default: 'inactive'
     },
     reports: [{
         type: String

@@ -27,12 +27,13 @@ const registerEmployee = asyncHandler( async(req, res) => {
         throw new ApiError(400, "Not getting form data properly, department")
     }
     req.body.department = department._id
-    const employee = await Employee.create(req.body);
+    const employee = await Employee.create(req.body)
     if (!employee) {
         throw new ApiError(400, "Not getting form data properly")
     }
     department.employee.push(employee._id)
     await department.save()
+    
     return res.status(200).json(
         new ApiResponse(200, employee, "Employee created successfully")
     )
@@ -44,12 +45,13 @@ const login = asyncHandler( async(req, res) => {
     if (!employee) {
         throw new ApiError(404, "Email not found")
     }
-    const isPasswordValid = await employee.isPasswordCorrect(password);
+    const isPasswordValid = await employee.isPasswordCorrect(password)
     if (!isPasswordValid) {
         throw new ApiError(401, "Incorrect password")
     }
     const { accessToken, refreshToken } = await genrateToken(employee._id)
     const loggedInEmployee = await Employee.findById(employee._id).select("-password -refreshToken")
+    
     return res
     .status(200)
     .cookie("accessToken", accessToken, options)

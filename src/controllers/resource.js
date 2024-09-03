@@ -18,6 +18,7 @@ const addResource = asyncHandler( async(req, res) => {
     if (!createdResource) {
         throw new ApiError(409, "unable to create resource")
     }
+    
     res
     .status(200)
     .json(new ApiResponse(200, createdResource, "resource created successfully"))
