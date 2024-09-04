@@ -124,9 +124,23 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
     }
 })
 
+const getEmployee = asyncHandler( async(req, res) => {
+    const employee = await Employee.findById(req.employee._id)
+    if (!employee) {
+        throw new ApiError(404, "Employee not found")
+    }
+    const employeeObj = employee.toObject()
+    delete employeeObj.password
+    delete employeeObj.refreshToken
+    delete employeeObj.__v
+    employeeObj.department = await Department.findById(employee.department).select({name: 1})
+    return res.status(200).json(new ApiResponse(200, employeeObj, "Employee found"))
+})
+
 module.exports = {
     registerEmployee,
     login,
     logout,
-    refreshAccessToken
+    refreshAccessToken,
+    getEmployee
 }
