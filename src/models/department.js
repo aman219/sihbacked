@@ -6,6 +6,10 @@ const departmentSchema = new Schema({
         required: true,
         unique: true
     },
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: 'Employee'
+    },
     employee: [{
         type: Schema.Types.ObjectId,
         ref: 'Employee'

@@ -2,7 +2,6 @@ const { ApiResponse } = require('../utils/ApiResponse')
 const { ApiError } = require('../utils/ApiError')
 const { asyncHandler } = require('../utils/asyncHandler')
 const { Employee } = require('../models/employee')
-const { options } = require('../constants')
 const jwt = require('jsonwebtoken')
 const { Department } = require('../models/department')
 
@@ -52,6 +51,11 @@ const login = asyncHandler( async(req, res) => {
     const { accessToken, refreshToken } = await genrateToken(employee._id)
     const loggedInEmployee = await Employee.findById(employee._id).select("-password -refreshToken")
     
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
     return res
     .status(200)
     .cookie("accessToken", accessToken, options)
@@ -82,6 +86,11 @@ const logout = asyncHandler( async(req, res) => {
         }
     )
 
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
     return res
     .status(200)
     .clearCookie("accessToken", options)
@@ -107,6 +116,11 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
             throw new ApiError(401, "refresh token is expired or used")
         }
         const { accessToken, refreshToken } = await genrateToken(employee._id)
+
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
         
         return res
         .status(200)
@@ -124,9 +138,27 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
     }
 })
 
+const getEmployee = asyncHandler( async(req, res) => {
+    const employee = await Employee.findById(req.employee._id).select("-password -refreshToken -__v").populate("department", "name")
+    if (!employee) {
+        throw new ApiError(404, "Employee not found")
+    }
+    return res.status(200).json(new ApiResponse(200, employee, "Employee found"))
+})
+
+const getNotification = asyncHandler( async(req, res) => {
+    const notification = await Employee.findById(req.employee._id).populate("notifications").select("notifications")
+    if (!notification) {
+        throw new ApiError(404, "Notification not found")
+    }
+    return res.status(200).json(new ApiResponse(200, notification, "Notification found"))
+})
+
 module.exports = {
     registerEmployee,
     login,
     logout,
-    refreshAccessToken
+    refreshAccessToken,
+    getEmployee,
+    getNotification
 }

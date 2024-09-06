@@ -2,6 +2,23 @@ const {mongoose, Schema} = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+const notificationSchema = new Schema({
+    message: {
+        type: String,
+        required: true
+    },
+    project: {
+        type: Schema.Types.ObjectId,
+        ref: 'Project'
+    },
+    read: {
+        type: Boolean,
+        default: false
+    }
+}, { timestamps: true })
+
+const Notification = mongoose.model("Notification", notificationSchema)
+
 const employeeSchema = new Schema({
     firstName : {
         type: String,
@@ -42,6 +59,10 @@ const employeeSchema = new Schema({
     profilePhoto : {
         type: String
     },
+    notifications : [{
+        type: Schema.Types.ObjectId,
+        ref: 'Notification'
+    }],
     role : {
         type: String,
         required: true
@@ -87,6 +108,7 @@ employeeSchema.methods.genrateRefreshToken = function() {
     )
 }
 
-const Employee = mongoose.model("Employee", employeeSchema);
+const Employee = mongoose.model("Employee", employeeSchema)
 
-module.exports = { Employee }
+
+module.exports = { Employee, Notification }
