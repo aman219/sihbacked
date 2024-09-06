@@ -30,6 +30,22 @@ const projectSchema = new Schema({
     reports: [{
         type: String
     }],
+    depResponses: [
+        new Schema({
+            department: {
+                type: Schema.Types.ObjectId,
+                ref: 'Department',
+                unique: true
+            },
+            accepted: {
+                type: Boolean,
+                default: false
+            },
+            response: {
+                type: String
+            }
+        }, { timestamps: true })
+    ],
     location: {
         type: String,
         required: true
